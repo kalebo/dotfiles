@@ -1,0 +1,45 @@
+#!/usr/bin/python
+
+import sys, os, stat
+from pathlib import Path
+from shutil import which
+
+# chromium_flags = ["--enable-features=UseOzonePlatform", "--ozone-platform=wayland", "--no-sandbox"]
+chromium_flags = ["--enable-gpu", "--use-gl=egl", "--enable-features=VaapiVideoDecoder,VaapiVideoEncoder,WebRTCPipeWireCapturer,UseOzonePlatform", "--ozone-platform=wayland", "--no-sandbox"]
+home = Path().home()
+
+def _exec(path, args=[], env={}):
+    path.chmod(path.stat().st_mode | stat.S_IEXEC)
+    os.execve(path, [path, *args], os.environ | env)
+
+def telegram(args=[]):
+    _exec(home/'bin/appimages/Telegram.AppImage', args=[*args], env={'QT_QPA_PLATFORM': 'wayland'})
+
+def logseq(args=[]):
+    _exec(home/'bin/appimages/Logseq.AppImage', args=[*[chromium_flags[-1]], *args])
+
+def zulip(args=[]):
+    _exec(home/'bin/appimages/Zulip-5.9.3-x86_64.AppImage', args=[*chromium_flags, *args])
+
+def sabaki(args=[]):
+    _exec(home/'bin/appimages/Sabaki.AppImage', args=[*chromium_flags, *args])
+
+def vscode(args=[]):
+    os.execve(Path(which('code') or "code_not_found"), [*chromium_flags, *args], os.environ)
+
+def invert(args=[]):
+    os.execvp("wl-gammactl", ["wl-gammactl", '-c', '-1.000', '-b', '2.000', '-g', '1.000'])
+
+if __name__ == "__main__":
+    exec_name = Path(sys.argv[0]).name
+    args = sys.argv[1:]
+    if Path(__file__).name == exec_name:
+        exec_name = sys.argv[1]
+        args = sys.argv[2:]
+
+
+    try:
+        getattr(sys.modules[__name__], exec_name)(args)
+    except AttributeError as e:
+        print(e)
+        sys.exit(f"Could not find definition for {exec_name}")

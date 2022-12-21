@@ -1,0 +1,79 @@
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+# source FZF on debian
+if [[ -s /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
+  source /usr/share/doc/fzf/examples/key-bindings.zsh
+fi
+
+# source FZF on fedora
+if [[ -s /usr/share/fzf/shell/key-bindings.zsh ]]; then
+  source /usr/share/fzf/shell/key-bindings.zsh
+fi
+
+# Customize to your needs...
+
+## Personal aliases
+
+# alias kj='gvim /tmp/jrnl' 
+# alias kj-up='rsync -v /home/kaleb/journal/journal.txt olson@ko.bd.to:/home/olson/journal/journal.txt'
+# alias pi-up='rsync -v /home/kaleb/journal/journal.txt pi:/home/olson/journal/journal.txt'
+# alias kj-dl=' rsync -v olson@ko.bd.to:/home/olson/journal/journal.txt /home/kaleb/journal/journal.txt' 
+# alias pi='mosh olson@pi --ssh="ssh -p 56777" -- tmux a'
+
+alias emt='emacsclient -t'
+
+export cf=$HOME/cf/master/
+
+## Personal functions
+
+emc() {emacsclient -c "$*" & disown}
+emw() {emacsclient "$*" & disown}
+wcd() {latexmk -pvc -pdf "$*"}
+dexec() {sudo docker exec -i -t $1 /bin/bash}
+tel() {cd $((dirs -l | tr ' ' '\n')| fzf --height=10%)}
+
+function gitdot {
+   git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
+}
+
+# zstyle ':prezto:load' pmodule \
+#   'environment' \
+#   'terminal' \
+#   'syntax-highlighting' \
+#   'editor' \
+#   'history' \
+#   'history-substring-search' \
+#   'directory' \
+#   'spectrum' \
+#   'utility' \
+#   'completion' \
+#   'git' \
+#   'prompt'
+
+export PATH="$HOME/bin:$HOME/.yarn/bin:$HOME/.local/bin:$HOME/.emacs.d/bin:$PATH"
+
+#compdef toggl
+_toggl() {
+  eval $(env COMMANDLINE="${words[1,$CURRENT]}" _TOGGL_COMPLETE=complete-zsh  toggl)
+}
+if [[ "$(basename -- ${(%):-%x})" != "_toggl" ]]; then
+  autoload -U compinit && compinit
+  compdef _toggl toggl
+fi
+
+alias lg='lazygit'
+
+export FZF_DEFAULT_COMMAND="rg --files"
+eval "$(zoxide init zsh)"
+
+source /home/kalebo/.config/broot/launcher/bash/br
+

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+case $(basename "$0") in 
+    "asdf")
+        echo "Switching to dvorak"
+        swaymsg input '1:1:AT_Translated_Set_2_keyboard' xkb_layout us
+        swaymsg input '1:1:AT_Translated_Set_2_keyboard' xkb_variant 'dvorak'
+    ;;
+    "aoeu")
+        echo "Switching to us"
+        swaymsg input '1:1:AT_Translated_Set_2_keyboard' xkb_layout us
+        swaymsg input '1:1:AT_Translated_Set_2_keyboard' xkb_variant '""'
+    ;;
+    *)
+        echo "$0"
+    ;;
+esac
+
+swaymsg input '1:1:AT_Translated_Set_2_keyboard' xkb_options 'caps:escape'
+swaymsg input '1739:0:Synaptics_TM3512-010' tap enabled
