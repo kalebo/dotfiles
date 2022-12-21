@@ -5,5 +5,5 @@ I used to use a bare git repo to manage my dotfiles with a separate branch for e
 All in one kick off to install chezmoi in `./bin/` and setup these dotfiles:
 
 ```sh
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply kalebo 
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --ssh --apply kalebo 
 ```
