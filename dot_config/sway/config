@@ -24,7 +24,8 @@ set $menu ulauncher-toggle
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg  /usr/share/backgrounds/gnome/blobs-d.svg stretch
+# output * bg  /usr/share/backgrounds/gnome/blobs-d.svg stretch
+output * bg  /usr/share/backgrounds/gnome/keys-d.webp fill
 #
 # Example configuration:
 #
