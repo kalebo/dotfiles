@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+profile_is_a2dp=$(pactl list cards | awk -v RS='' '/bluez/' | awk -F': ' '/Active Profile/ { print $2 }' | grep a2dp )
+
+card_id="bluez_card.F8_4E_17_83_48_E8"
+ 
+if [ -n "$profile_is_a2dp" ]; then
+   pactl set-card-profile "$card_id" headset-head-unit
+else
+   pactl set-card-profile "$card_id" a2dp-sink
+fi
