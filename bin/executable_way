@@ -5,7 +5,7 @@ from pathlib import Path
 from shutil import which
 
 # chromium_flags = ["--enable-features=UseOzonePlatform", "--ozone-platform=wayland", "--no-sandbox"]
-chromium_flags = ["--enable-gpu", "--use-gl=egl", "--enable-features=VaapiVideoDecoder,VaapiVideoEncoder,WebRTCPipeWireCapturer,UseOzonePlatform", "--ozone-platform=wayland", "--no-sandbox"]
+chromium_flags = ["--enable-gpu", "--use-gl=egl", "--enable-features=VaapiVideoDecoder,VaapiVideoEncoder,WebRTCPipeWireCapturer,UseOzonePlatform", "--ozone-platform=wayland", "--ozone-platform-hint=wayland", "--no-sandbox"]
 home = Path().home()
 
 def _exec(path, args=[], env={}):
@@ -19,7 +19,7 @@ def logseq(args=[]):
     _exec(home/'bin/appimages/Logseq.AppImage', args=[*[chromium_flags[-1]], *args])
 
 def zulip(args=[]):
-    _exec(home/'bin/appimages/Zulip-5.9.5-x86_64.AppImage', args=[*chromium_flags, *args])
+    _exec(home/'bin/appimages/Zulip-5.10.4-x86_64.AppImage', args=[*chromium_flags, *args])
 
 def sabaki(args=[]):
     _exec(home/'bin/appimages/Sabaki.AppImage', args=[*chromium_flags, *args])
