@@ -4,7 +4,7 @@
     "height": 24, // Waybar height
     // "width": 1366, // Waybar width
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/spotify"],
+    "modules-left": ["sway/workspaces","hyprland/workspaces" , "sway/mode", "custom/spotify"],
     "modules-center": ["clock", "custom/notification"],
     "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "sway/language", "tray"],
     "sway/workspaces": {
