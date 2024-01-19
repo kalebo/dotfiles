@@ -295,6 +295,11 @@ seat * hide_cursor 10000
 
 include /etc/sway/config.d/*
 
+input "1739:0:Synaptics_TM3512-010" {
+    tap enabled
+    middle_emulation enabled
+}
+
 # set environment vars for screenshare
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway XDG_SESSION_TYPE=sway
 
