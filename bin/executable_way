@@ -22,7 +22,7 @@ def logseq(args=[]):
     _exec(home/'bin/appimages/Logseq.AppImage', args=[*[chromium_flags[-1]], *args])
 
 def zulip(args=[]):
-    _exec(home/'bin/appimages/Zulip-5.11.0-x86_64.AppImage', args=[*chromium_flags, *args])
+    _exec(home/'bin/appimages/Zulip-5.12.0-x86_64.AppImage', args=[*chromium_flags, *args])
 
 def sabaki(args=[]):
     _exec(home/'bin/appimages/Sabaki.AppImage', args=[*chromium_flags, *args])
