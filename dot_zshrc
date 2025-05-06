@@ -80,3 +80,19 @@ source /home/kalebo/.config/broot/launcher/bash/br
 if [[ -s $HOME/.zsh_cf_conda.sh ]]; then 
   source $HOME/.zsh_cf_conda.sh 
 fi
+
+# bun completions
+[ -s "/home/kalebo/.bun/_bun" ] && source "/home/kalebo/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+path=('/home/kalebo/.juliaup/bin' $path)
+export PATH
+
+# <<< juliaup initialize <<<
