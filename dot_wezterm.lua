@@ -51,6 +51,16 @@ config.tls_clients = {
   {name = 'c3n6m', remote_address='c3n6.coreform:4367', bootstrap_via_ssh='c3n6.coreform', expected_cn = 'c3n6',},
 }
 
+wezterm.on('format-window-title', function(tab, pane, tabs,
+panes, config)
+  local title = tab.active_pane.title
+  local ws = pane.user_vars.workspace
+  if ws and ws ~= '' then
+    return '[ws:' .. ws .. '] ' .. title
+  end
+  return title
+end)
+
 -- and finally, return the configuration to wezterm
 return config
 

@@ -1,0 +1,49 @@
+#!/bin/bash
+# organize-wezmux — move wezterm windows to their declared workspace
+#
+# Reads [ws:N] tags from wezterm window titles and moves each window
+# to workspace N using hyprctl.
+#
+# === zsh configuration (add to ~/.zshrc on remote machines) ===
+#
+# function set_wez_workspace() {
+#   export WEZ_WORKSPACE=$1
+#   local encoded
+#   encoded=$(printf '%s' "$1" | base64)
+#   printf '\033]1337;SetUserVar=%s=%s\007' workspace "$encoded"
+# }
+#
+# function set_terminal_title() {
+#   print -Pn "\e]2;%n@%m: %~\e\\"
+# }
+# precmd_functions+=(set_terminal_title)
+#
+# === wezterm configuration (add to local ~/.wezterm.lua) ===
+#
+# wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
+#   local title = tab.active_pane.title
+#   local ws = pane.user_vars.workspace
+#   if ws and ws ~= '' then
+#     return '[ws:' .. ws .. '] ' .. title
+#   end
+#   return title
+# end)
+#
+# === usage ===
+#
+# In any shell session:  set_wez_workspace 5
+# Then run this script to move all tagged windows to their workspaces.
+#
+# The workspace tag persists even when programs (e.g. claude) overwrite
+# the pane title, because it uses wezterm user vars (OSC 1337) rather
+# than encoding directly in the title string.
+#
+# ============================================
+
+hyprctl clients -j \
+  | jq -r '.[] | select(.title | test("^\\[ws:\\d+\\]")) | "\(.address) \(.title)"' \
+  | while read -r addr title; do
+      ws=$(echo "$title" | grep -oP '(?<=\[ws:)\d+(?=\])')
+      hyprctl dispatch movetoworkspacesilent "$ws,address:$addr"
+      echo "Moved '$title' -> workspace $ws"
+    done
