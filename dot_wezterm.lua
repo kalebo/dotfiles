@@ -28,6 +28,8 @@ config.enable_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = true
 
+config.freetype_load_target = "HorizontalLcd"
+
 -- wezterm.config.leader = {
 --   key = 'a',
 --   mods = 'CTRL',
@@ -41,7 +43,9 @@ config.use_fancy_tab_bar = true
 --     action = act.SpawnTab 'CurrentPaneDomain',
 --   },
 -- }
---
+config.keys = {
+  { key = 'l', mods = 'ALT', action = wezterm.action.ShowLauncher },
+}
 
 config.tls_clients = {
   {name = 'c3n6m', remote_address='c3n6.coreform:4367', bootstrap_via_ssh='c3n6.coreform', expected_cn = 'c3n6',},
